@@ -8,7 +8,9 @@ public class LengthUnit {
 
     public enum Length {
         INCH(1.0), // Base unit
-        FEET(12.0); // 1 foot = 12 inches
+        FEET(12.0), // 1 foot = 12 inches
+        YARD(36.0), // 1 yard = 3 feet
+        CENTIMETER(0.393701);
 
         private final double inchesConversionFactor;
 
@@ -29,6 +31,7 @@ public class LengthUnit {
     public double convertToActualUnit(){
         return this.value * this.unit.getConverter();
     }
+    @Override
     public boolean equals(Object obj){
         if (this == obj) {
             return true;
@@ -37,13 +40,25 @@ public class LengthUnit {
             return false;
         }
         LengthUnit unit1 = (LengthUnit) obj;
-
-        return Double.compare(this.convertToActualUnit(), unit1.convertToActualUnit()) == 0;
+    System.out.println(this.convertToActualUnit());
+        System.out.println(unit1.convertToActualUnit());
+        return Double.compare(Double.parseDouble(String.format("%.2f", this.convertToActualUnit())), Double.parseDouble(String.format("%.2f", unit1.convertToActualUnit()))) == 0;
     }
 
     public static void main(String[] args) {
         LengthUnit L1 = new LengthUnit(1.0, LengthUnit.Length.FEET);
         LengthUnit L2 = new LengthUnit(12.0, LengthUnit.Length.INCH);
+
+        LengthUnit L3 = new LengthUnit(1.0, LengthUnit.Length.YARD);
+        LengthUnit L4 = new LengthUnit(36.0, LengthUnit.Length.INCH);
+
+        LengthUnit L5 = new LengthUnit(0.33333, LengthUnit.Length.YARD);
+        LengthUnit L6 = new LengthUnit(1.2, LengthUnit.Length.CENTIMETER);
+
+//        LengthUnit L7 = new LengthUnit(100.0, Length.CENTIMETER);
+//        LengthUnit L8 = new LengthUnit(39.3701, Length.INCH);
         System.out.println("------"+L1.equals(L2));
+        System.out.println("------"+L3.equals(L4));
+//        System.out.println("------"+L5.equals(L6));
     }
 }
