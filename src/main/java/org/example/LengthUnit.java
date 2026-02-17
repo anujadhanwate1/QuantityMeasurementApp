@@ -3,8 +3,6 @@ package org.example;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class LengthUnit {
-    private final double value;
-    private final Length unit;
 
     public enum Length {
         INCH(1.0), // Base unit
@@ -23,42 +21,23 @@ public class LengthUnit {
         }
     }
 
-    public LengthUnit(double value, Length unit){
-        this.value= value;
-        this.unit = unit;
+    public LengthUnit(){
     }
 
-    public double convertToActualUnit(){
-        return this.value * this.unit.getConverter();
+    public double convertToActualUnit(double value, Length unit1){
+        return value * unit1.getConverter();
     }
-    @Override
-    public boolean equals(Object obj){
-        if (this == obj) {
-            return true;
-        }
-        if(obj == null || getClass() !=obj.getClass()){
-            return false;
-        }
-        LengthUnit unit1 = (LengthUnit) obj;
-    System.out.println(this.convertToActualUnit());
-        System.out.println(unit1.convertToActualUnit());
-        return Double.compare(Double.parseDouble(String.format("%.2f", this.convertToActualUnit())), Double.parseDouble(String.format("%.2f", unit1.convertToActualUnit()))) == 0;
+
+    public double convertToActualUnit(double value, Length unit1, Length unit2){
+        double baseValue = value * unit1.getConverter();
+        return baseValue / unit2.getConverter();
     }
 
     public static void main(String[] args) {
-        LengthUnit L1 = new LengthUnit(1.0, LengthUnit.Length.FEET);
-        LengthUnit L2 = new LengthUnit(12.0, LengthUnit.Length.INCH);
-
-        LengthUnit L3 = new LengthUnit(1.0, LengthUnit.Length.YARD);
-        LengthUnit L4 = new LengthUnit(36.0, LengthUnit.Length.INCH);
-
-        LengthUnit L5 = new LengthUnit(0.33333, LengthUnit.Length.YARD);
-        LengthUnit L6 = new LengthUnit(1.2, LengthUnit.Length.CENTIMETER);
-
-//        LengthUnit L7 = new LengthUnit(100.0, Length.CENTIMETER);
-//        LengthUnit L8 = new LengthUnit(39.3701, Length.INCH);
-        System.out.println("------"+L1.equals(L2));
-        System.out.println("------"+L3.equals(L4));
-//        System.out.println("------"+L5.equals(L6));
+        LengthUnit L1 = new LengthUnit();
+        double convertedVal = L1.convertToActualUnit(3,Length.FEET);
+        System.out.println("Function 1 : "+convertedVal);
+        double convertedVal2 = L1.convertToActualUnit(3,Length.INCH,Length.CENTIMETER);
+        System.out.println("Function 2 : "+convertedVal2);
     }
 }
